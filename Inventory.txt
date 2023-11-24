@@ -1,0 +1,4 @@
+Arduino uno
+ESP32
+LCD 16 char 2 row
+5" mini oled display
