@@ -10,11 +10,26 @@ pub fn main() !void {
 
     try fm.ShowInventory();
 
-    try stdout.print("\n\nSelect operation:\n", .{});
-
     try fm.ListCommands(stdout);
 
-    const input: u8 = try im.GetUserChar("Operation: ");
+    const input: u8 = try im.GetUserChar("\nOperation: ");
 
-    _ = input;
+    switch (input) {
+        'c' => {
+            try fm.CreateObject();
+        },
+        'd' => {
+            try stdout.print("Delete object", .{});
+        },
+        'a' => {
+            try stdout.print("Add to object", .{});
+        },
+        's' => {
+            try stdout.print("Subtract from object", .{});
+        },
+
+        else => {
+            try stdout.print("Invalid character: {c}", .{input});
+        },
+    }
 }
