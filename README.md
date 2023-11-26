@@ -16,8 +16,11 @@ I know the cause of this black magic, but now I got a new issue. The read issue 
 But now when I read the Inventory.txt file witch looks like this as of now
 
 ABCD
+
 BCD
+
 CD
+
 D
 
 It only reads the D's so the inventory output becomes DDDD. Why, because it wants to, let it....
