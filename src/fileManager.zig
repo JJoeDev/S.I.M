@@ -14,14 +14,12 @@ pub fn ListCommands(writer: fs.File.Writer) !void { // getStdOut.writer() return
 pub fn ShowInventory() !void {
     const inventory = try fs.cwd().openFile("Inventory.txt", .{});
     defer inventory.close();
+    try inventory.seekTo(0);
 
-    var bufReader = std.io.bufferedReader(inventory.reader());
-    var inStream = bufReader.reader();
+    var readBuffer: [2048]u8 = undefined;
+    const bytesRead = try inventory.readAll(&readBuffer);
 
-    var buf: [1024]u8 = undefined;
-    while (try inStream.readUntilDelimiterOrEof(&buf, '\n')) |line| {
-        std.debug.print("{s}\n", .{line});
-    }
+    try std.io.getStdOut().writer().print("{s}", .{readBuffer[0..bytesRead]});
 }
 
 const InventoryErrors = error{
@@ -40,7 +38,7 @@ pub fn CreateObject() !void {
     try std.io.getStdOut().writer().print("Name of new Object: ", .{});
     const result = try std.io.getStdIn().reader().readUntilDelimiterOrEof(objNameBuf[0..], '\n');
 
-    const resultWrite = try inventory.write(objNameBuf[0..]);
+    const resultWrite = try inventory.write(objNameBuf[0..result.?.len]);
     _ = resultWrite;
     try std.io.getStdOut().writer().print("Result: {any}", .{result});
 }

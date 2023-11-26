@@ -6,7 +6,10 @@ pub fn GetUserChar(msg: []const u8) !u8 {
 
     try stdout.print("{s}", .{msg});
 
-    const input = try stdin.readByte();
+    var input: u8 = 0;
+    input = try stdin.readByte(); // input = u8
+
+    try stdout.print("inp: {c}", .{input});
 
     return input;
 }
